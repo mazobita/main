@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MAZOBITA Creative Agency</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(#666 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: pulse 3s infinite;
+            z-index: 0;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                background-size: 20px 20px;
+            }
+
+            50% {
+                background-size: 22px 22px;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 100px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            background-color: #000;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .logo:hover .insta-bubble,
+        .logo:hover~.agency-name .creative-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .insta-bubble {
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            padding: 8px;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .insta-bubble img {
+            width: 24px;
+            height: 24px;
+            filter: grayscale(100%);
+        }
+
+        .insta-bubble.clicked {
+            animation: clickPulse 0.3s ease;
+        }
+
+        @keyframes clickPulse {
+            0% {
+                transform: scale(1) translateX(-50%);
+            }
+
+            50% {
+                transform: scale(1.2) translateX(-50%);
+            }
+
+            100% {
+                transform: scale(1) translateX(-50%);
+            }
+        }
+
+        .agency-name {
+            font-size: 48px;
+            font-weight: bold;
+            color: #222;
+            display: flex;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .letters {
+            display: flex;
+            gap: 10px;
+        }
+
+        .creative-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #555;
+            margin-top: 5px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            align-self: flex-end;
+        }
+
+        .letter {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .bubble,
+        .bubbleBelow {
+            position: absolute;
+            background: #000;
+            color: #fff;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 12px;
+            text-align: center;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+            white-space: normal;
+            z-index: 1;
+        }
+
+        .bubble {
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .bubbleBelow {
+            top: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .letter:hover .bubble {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+        .letter:hover .bubbleBelow {
+            opacity: 1;
+            transform: translateX(-50%) translateY(10px);
+        }
+
+        .bubble::before,
+        .bubble::after,
+        .bubbleBelow::before,
+        .bubbleBelow::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            opacity: 0;
+            animation: atomRipple 3s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bubble::after,
+        .bubbleBelow::after {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes atomRipple {
+            0% {
+                transform: scale(4);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.6);
+                opacity: 0.2;
+            }
+
+            100% {
+                transform: scale(2.2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <div class="logo" onclick="handleLogoClick()">
+            <div class="insta-bubble" id="instaBubble">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" />
+            </div>
+        </div>
+        <div class="agency-name">
+            <div class="letters">
+                <span class="letter">M<div class="bubble">Marketing</div></span>
+                <span class="letter">A<div class="bubble">Advertising</div></span>
+                <span class="letter">Z<div class="bubbleBelow">Zoom Branding</div></span>
+                <span class="letter">O<div class="bubbleBelow">Optimization</div></span>
+                <span class="letter">B<div class="bubbleBelow">Branding</div></span>
+                <span class="letter">I<div class="bubbleBelow">Innovation</div></span>
+                <span class="letter">T<div class="bubble">Technology</div></span>
+                <span class="letter">A<div class="bubble">Aesthetics</div></span>
+            </div>
+            <div class="creative-text">Creative Agency</div>
+        </div>
+    </div>
+    <script>
+        function handleLogoClick() {
+            const bubble = document.getElementById('instaBubble');
+            bubble.classList.add('clicked');
+            setTimeout(() => {
+                bubble.classList.remove('clicked');
+                window.open('https://www.instagram.com/mazobita/', '_blank');
+            }, 300);
+        }
+    </script>
+</body>
+
+</html>
